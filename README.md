@@ -23,6 +23,9 @@ This project analyzes the sentiment of tweets from Nigeria using NLP and AWS ser
 ## 🧹 Preprocessing
 Run `src/preprocess_tweets.py` to clean raw tweets and save them as `cleaned_tweets.csv`. This step removes noise and prepares the data for sentiment classification.
 
+## 🧠 Sentiment Labeling
+Run `src/label_sentiment.py` to auto-label tweets using Amazon Comprehend. This step adds a `sentiment` column to the dataset for training and analysis.
+
 ## 📊 Sample Output
 ![Sentiment Dashboard Screenshot](link-to-image-if-available)
 
