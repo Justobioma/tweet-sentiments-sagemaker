@@ -1,5 +1,17 @@
 import tweepy
 import json
+import time
+
+def safe_search(client, query, max_results=100):
+    for attempt in range(5):
+        try:
+            return client.search_recent_tweets(query=query, max_results=max_results, tweet_fields=["created_at", "text", "author_id"])
+        except tweepy.errors.TwitterServerError as e:
+            print(f"Attempt {attempt+1}: Server error. Retrying in {2**attempt} seconds...")
+            time.sleep(2**attempt)
+    raise Exception("Twitter API failed after multiple retries.")
+
+
 
 # Replace with your actual credentials
 BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAP3Y4AEAAAAANUC4Ou8N1Q%2B4tFSUd6q0e1dLARs%"
@@ -8,10 +20,13 @@ BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAP3Y4AEAAAAANUC4Ou8N1Q%2B4tFSUd6q0e1dLARs%"
 client = tweepy.Client(bearer_token=BEARER_TOKEN)
 
 # Define search query
-query = "#Naija OR #EndSARS OR #Japa OR Nigeria lang:en -is:retweet"
+# query = "#Naija OR #EndSARS OR #Japa OR Nigeria lang:en -is:retweet"
+
+query = "#Naija lang:en -is:retweet"
+
 
 # Fetch tweets
-response = client.search_recent_tweets(query=query, max_results=100, tweet_fields=["created_at", "text", "author_id"])
+response = client.search_recent_tweets(query=query, max_results=20, tweet_fields=["created_at", "text", "author_id"])
 
 # Save tweets to JSON
 tweets_data = []

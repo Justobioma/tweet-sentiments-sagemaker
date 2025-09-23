@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 # Download NLTK resources
-nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('stopwords')
 
 # Load raw tweet data
