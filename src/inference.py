@@ -26,6 +26,18 @@ def predict_fn(input_data, bundle):
     prediction = model.predict(features)
     return prediction
 
+# """ def output_fn(prediction, response_content_type):
+#     """Format the prediction output."""
+#     return str(prediction[0]) """
+
 def output_fn(prediction, response_content_type):
     """Format the prediction output."""
-    return str(prediction[0])
+    label_map = {0: "Positive", 1: "Negative"}  # fallback if not in bundle
+    try:
+        # If label_map is stored in the bundle
+        label_map = bundle.get("label_map", label_map)
+    except:
+        pass
+
+    label = label_map.get(int(prediction[0]), "Unknown")
+    return label
