@@ -1,12 +1,21 @@
 import os
 import joblib
 import numpy as np
+import xgboost as xgb
 
 def model_fn(model_dir):
-    """Load the model and vectorizer from the model directory."""
-    bundle_path = os.path.join(model_dir, "model_bundle.pkl")
-    bundle = joblib.load(bundle_path)
-    return bundle
+    """Load the XGBoost model and vectorizer from the model directory."""
+    # Load XGBoost model
+    model_path = os.path.join(model_dir, "xgb_model.json")
+    model = xgb.XGBClassifier()
+    model.load_model(model_path)
+
+    # Load vectorizer
+    vectorizer_path = os.path.join(model_dir, "vectorizer.pkl")
+    vectorizer = joblib.load(vectorizer_path)
+
+
+
 
 def input_fn(request_body, request_content_type):
     """Parse the incoming request body."""
