@@ -9,12 +9,14 @@ def model_fn(model_dir):
 
     vectorizer = joblib.load(os.path.join(model_dir, "fitted_vectorizer.pkl"))
 
-    # 🔐 Sanity check
+    # 🔍 Fingerprint check
+    print("🧬 Loaded vocab size:", len(vectorizer.vocabulary_))
+    print("🧬 Loaded IDF fingerprint:", getattr(vectorizer, "idf_", "Missing"))
+
     if not hasattr(vectorizer, "idf_"):
         raise RuntimeError("🚨 Vectorizer is not fitted!")
 
     return {"booster": booster, "vectorizer": vectorizer}
-
 
 
 def input_fn(request_body, request_content_type):
