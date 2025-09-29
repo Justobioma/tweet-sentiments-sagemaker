@@ -1,5 +1,5 @@
 import os
-import pickle
+import joblib
 import numpy as np
 import xgboost as xgb
 
@@ -7,8 +7,7 @@ def model_fn(model_dir):
     booster = xgb.Booster()
     booster.load_model(os.path.join(model_dir, "xgb_model.json"))
 
-    with open(os.path.join(model_dir, "fitted_vectorizer.pkl"), "rb") as f:
-        vectorizer = pickle.load(f)
+    vectorizer = joblib.load(os.path.join(model_dir, "fitted_vectorizer.pkl"))
 
     print("🧬 Loaded vocab size:", len(vectorizer.vocabulary_))
     print("🧬 Loaded IDF fingerprint:", getattr(vectorizer, "idf_", "Missing"))
