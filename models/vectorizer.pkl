@@ -1,0 +1,7 @@
+vectorizer = joblib.load("vectorizer.pkl")
+
+new_text = ["Nigerian youth are thriving"]
+features = vectorizer.transform(new_text).toarray()
+
+# Format for endpoint
+payload = ",".join(map(str, features[0]))
