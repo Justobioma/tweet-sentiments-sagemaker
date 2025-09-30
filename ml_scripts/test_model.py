@@ -1,3 +1,6 @@
+import xgboost as xgb
+import joblib
+
 model = xgb.XGBClassifier()
 model.load_model("xgb_model.json")
 

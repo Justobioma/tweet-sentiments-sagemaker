@@ -1,3 +1,5 @@
+import boto3
+
 runtime = boto3.client('sagemaker-runtime')
 
 response = runtime.invoke_endpoint(
